@@ -1,7 +1,8 @@
 package com.joao_renault;
 
-import com.joao_renault.bills_burguers.BillsBurgers;
 import com.joao_renault.little_apps.*;
+import com.joao_renault.bank.BankTerminal;
+import com.joao_renault.bills_burguers.BillsBurgers;
 
 import java.util.InputMismatchException;
 import java.util.Locale;
@@ -15,6 +16,7 @@ public class Main {
     private static DiagonalStar app4 = new DiagonalStar();
     private static GreatestCommonDivisor app5 = new GreatestCommonDivisor();
     private static BillsBurgers app6 = new BillsBurgers();
+    private static BankTerminal app7 = new BankTerminal();
 
 
     public static void main(String[] args) {
@@ -62,7 +64,8 @@ public class Main {
                 "3 - All factors\n" +
                 "4 - Diagonal Star\n" +
                 "5 - Greatest Common Divisor\n" +
-                "6 - Bill's Burger");
+                "6 - Bill's Burger\n" +
+                "7 - Bank");
     }
 
     private static void menuOfApps() {
@@ -91,6 +94,9 @@ public class Main {
             case 6:
                 app6.execute();
                 break;
+            case 7:
+                app7.execute();
+                break;
             default:
                 System.out.println("Please try again with an existing option.");
                 break;
@@ -105,10 +111,11 @@ public class Main {
         System.out.println("************************************************************************************************");
         System.out.println("Welcome to Johnny Little Apps!\n" +
                 "I've created this small application after going through several hours of training in Java Language.\n" +
-                "All these little apps are part of Udemy's course Java Programming Masterclass (by Tim Buchalka),\n" +
-                "but they were all modified to fit in this compact application. They represent my learning process of core Java" +
+                "All these Little Apps are part of Udemy's course Java Programming Masterclass (by Tim Buchalka),\n" +
+                "but they were all modified to fit in this compact application. They represent my learning process of CORE Java." +
                 "You're welcome to play around and check what I've created. \n" +
                 "I'm always open for suggestions and improvements, so feel free to give me any feedbacks =)\n" +
+                "PS: A reminder that this app is simple and linear, meaning it doesn't follow advance concepts that frameworks do." +
                 "Created by: João Renault");
         System.out.println("************************************************************************************************");
 
