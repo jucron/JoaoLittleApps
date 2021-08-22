@@ -1,24 +1,20 @@
 package com.joao_renault.little_apps;
 
+import com.joao_renault.service.InputFromUser;
+import com.joao_renault.service.InputFromUserImpl;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MegaBytesConverter implements IEssentials {
-    private Scanner sc = new Scanner(System.in);
+    private final InputFromUser input = new InputFromUserImpl();
     private int kilobytes;
     private int megaBytes;
     private int remainKb;
-    private boolean checkFormat = true;
 
     public void megaBytesAndKiloBytes(int kiloBytes) {
-        if (kiloBytes<0) {
-            System.out.println("Must be a positive number, please try again");
-            this.checkFormat = false;
-        }
-        else {
             megaBytes = (kiloBytes/1024);
             remainKb = (kiloBytes%1024);
-        }
     }
     @Override
     public void execute() {
@@ -29,20 +25,24 @@ public class MegaBytesConverter implements IEssentials {
     @Override
     public void inputFromUser() {
         System.out.println("Choose the quantity of Kilobytes to convert:");
-            try {
-                kilobytes = sc.nextInt();
-//            kilobytes = Integer.parseInt(sc.nextLine());
-            } catch (InputMismatchException e) {
-                System.out.println("Input format error, please try again");
-                checkFormat = false;
+
+        int number;
+        while (true) {
+            number = input.tryIntInput();
+            if (number == -1) {
+//                InputMismatch, automatic answer
+            } else if (number >= 0) {
+                break;
+            } else {
+                System.out.println("Please choose a valid number: positive.");
             }
+        }
+        this.kilobytes = number;
         megaBytesAndKiloBytes(kilobytes);
     }
     @Override
     public void output() {
-        if (this.checkFormat) {
-            System.out.println("Conversion: "+this.kilobytes + " KB = " + megaBytes + " MB and " + remainKb + " KB");
-        }
+        System.out.println("Conversion: "+this.kilobytes + " KB = " + megaBytes + " MB and " + remainKb + " KB");
         System.out.println("----------------------------------------------------------------------------");
         System.out.println("Returning to main menu...");
     }

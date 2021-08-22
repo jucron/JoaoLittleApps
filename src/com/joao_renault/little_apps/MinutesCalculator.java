@@ -1,26 +1,23 @@
 package com.joao_renault.little_apps;
 
+import com.joao_renault.service.InputFromUser;
+import com.joao_renault.service.InputFromUserImpl;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MinutesCalculator implements IEssentials{
-    private Scanner sc = new Scanner(System.in);
-    private long minutes =0;
+    private final InputFromUser input = new InputFromUserImpl();
     private String output;
-    private boolean checkFormat = true;
 
     public void minutesCalculator (long minutes) {
-        if (minutes < 0) {
-            System.out.println("Must be a positive number, please try again");
-            this.checkFormat = false;
-        } else {
             int years = (int) (minutes/(365*24*60));
             long remainderMinutes = (minutes - ((long) years *365*24*60));
             int days = (int) (remainderMinutes/(24*60));
             remainderMinutes -= ((long) days *24*60);
 
             this.output = (minutes+" minutes is equal to: "+years+" years, "+days+" days and "+remainderMinutes+" minutes.");
-        }
+
     }
      @Override
     public void execute() {
@@ -31,19 +28,23 @@ public class MinutesCalculator implements IEssentials{
     @Override
     public void inputFromUser() {
         System.out.println("How many minutes would you like to calculate?");
-        try {
-            minutes = sc.nextLong();
-        } catch (InputMismatchException e) {
-            System.out.println("Input format error, please try again");
-            checkFormat = false;
+
+        long number;
+        while (true) {
+            number = input.tryLongInput();
+            if (number == -1) {
+//                InputMismatch, automatic answer
+            } else if (number >= 0) {
+                break;
+            } else {
+                System.out.println("Please choose a valid number: positive.");
+            }
         }
-        minutesCalculator(minutes);
+        minutesCalculator(number);
     }
     @Override
     public void output() {
-        if (this.checkFormat) {
             System.out.println(this.output);
-        }
         System.out.println("----------------------------------------------------------------------------");
         System.out.println("Returning to main menu...");
     }

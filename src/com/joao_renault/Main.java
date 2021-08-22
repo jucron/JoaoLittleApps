@@ -3,13 +3,11 @@ package com.joao_renault;
 import com.joao_renault.little_apps.*;
 import com.joao_renault.bank.BankTerminal;
 import com.joao_renault.bills_burguers.BillsBurgers;
-
-import java.util.InputMismatchException;
-import java.util.Locale;
-import java.util.Scanner;
+import com.joao_renault.service.InputFromUser;
+import com.joao_renault.service.InputFromUserImpl;
 
 public class Main {
-    private static Scanner scanner = new Scanner(System.in).useLocale(Locale.US);
+    private static InputFromUser input = new InputFromUserImpl();
     private static MegaBytesConverter app1 = new MegaBytesConverter();
     private static MinutesCalculator app2 = new MinutesCalculator();
     private static AllFactors app3 = new AllFactors();
@@ -21,15 +19,14 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Starting application...\n" +
-                "~~Welcome to Johnny Little Apps!~~\n" +
-                ">>Created by: João Renault<<");
+                "---------Welcome to Johnny Little Apps!-------\n" +
+                "-------->>Created by: João Renault<<----------");
         boolean quit = false;
-        int choice = 0;
+        int choice;
 
         while (!quit) {
             optionsMenu();
-            choice = inputTry();
-            scanner.nextLine(); // (This consumes the \n character)
+            choice = input.tryIntInput();
             switch (choice) {
                 case 0:
                     System.out.println("Shutting down...\n" +
@@ -42,8 +39,8 @@ public class Main {
                 case 2:
                     purpose();
                     break;
-                case 99: //In case of input error (non-integer)
-                    System.out.println("Input format error, please try again");
+                case -1: //In case of input error (non-integer)
+//                    System.out.println("Input format error, please try again");
                     break;
                 default: //in case no valid numbers are selected
                     System.out.println("Please try again with an existing option.");
@@ -67,11 +64,9 @@ public class Main {
                 "6 - Bill's Burger\n" +
                 "7 - Bank");
     }
-
     private static void menuOfApps() {
         littleAppsMenu();
-        int appChoice = inputTry();
-        scanner.nextLine(); // (This consumes the \n character)
+        int appChoice = input.tryIntInput();
         switch (appChoice) {
             case 0:
                 // Goes back to main menu
@@ -100,13 +95,11 @@ public class Main {
             default:
                 System.out.println("Please try again with an existing option.");
                 break;
-            case 99: //In case of input error (non-integer)
-                System.out.println("Input format error, please try again");
+            case -1: //In case of input error (non-integer)
                 System.out.println("Returning to main menu...");
                 break;
         }
     }
-
     private static void purpose () {
         System.out.println("************************************************************************************************");
         System.out.println("Welcome to Johnny Little Apps!\n" +
@@ -120,12 +113,4 @@ public class Main {
         System.out.println("************************************************************************************************");
 
     }
-    private static int inputTry() {
-        try {
-            return scanner.nextInt();
-        } catch (InputMismatchException e) {
-            return 99;
-        }
-    }
-
 }

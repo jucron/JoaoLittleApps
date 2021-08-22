@@ -1,59 +1,100 @@
 package com.joao_renault.bank;
 
-import java.util.InputMismatchException;
+import com.joao_renault.service.InputFromUser;
+
 import java.util.Locale;
 import java.util.Scanner;
 
 public class BankTerminal {
 
     private static Scanner scanner = new Scanner(System.in).useLocale(Locale.US);
-
-    private static Bank bank = new Bank("Bank of Australia");
-
     boolean quit = false;
-    int choice = 0;
+    private InputFromUser input;
 
-    optionsMenu();
 
-    while (!quit) {
-        System.out.println("Enter action (9 for Menu)");
-        choice = scanner.nextInt();
-        scanner.nextLine(); // (This consumes the \n character)
-        switch (choice) {
-            case 0:
-                System.out.println("Shutting down...");
-                quit=true;
-                break;
-            case 1:
-                createBranch();
-                break;
-            case 2:
-                listOfBranches();
-                break;
-            case 3:
-                addCustomer();
-                break;
-            case 4:
-                addTransaction();
-                break;
-            case 5:
-                listOfCustomers();
-                break;
-            case 6:
-                removeBranch();
-                break;
-            case 7:
-                removeCustomer();
-                break;
-            case 8:
-                removeTransaction();
-                break;
-            case 9:
+    private static Bank bank;
+
+    public void execute() {
+        System.out.println(description());
+        startingBankApp();
+    }
+    private String description() {
+        System.out.println("----------------------------Bill's Burger------------------------------------");
+        return ("Are you going to the Bank? No need! I'm here to give you assistance.\n" +
+                "This is the Little Bank App! Feel free to create your own bank, make transactions and clients.\n" +
+                "TODO.\n");
+    }
+    private void startingBankApp() {
+        System.out.println("Let's get started!\n" +
+                "Would you like to load the bank database?\n" +
+                "(yes/no - y/n)");
+        while (true) {
+            String answer = input.tryStrInput().toLowerCase();
+            if (answer.equals("yes") || answer.equals("y")) {
+                loadDB();
                 optionsMenu();
                 break;
+            } else if (answer.equals("no") || answer.equals("n")) {
+                newBank();
+                optionsMenu();
+                break;
+            } else {
+                System.out.println("Please try again.");
+            }
         }
     }
-    public static void optionsMenu () {
+    private void optionsMenu() {
+        while (!quit) {
+            System.out.println("////////////////////////////////////");
+            System.out.println("Choose the next action");
+            printOptionsMenu();
+            int choice = input.tryIntInput();
+            scanner.nextLine(); // (This consumes the \n character)
+            switch (choice) {
+                case 0:
+                    System.out.println("Closing Bank Application");
+                    saveBank();
+                    System.out.println("----------------------------------------------------------------------------");
+                    System.out.println("Returning to main menu...");
+                    quit=true;
+                    break;
+                case 1:
+                    createBranch();
+                    break;
+                case 2:
+                    listOfBranches();
+                    break;
+                case 3:
+                    addCustomer();
+                    break;
+                case 4:
+                    addTransaction();
+                    break;
+                case 5:
+                    listOfCustomers();
+                    break;
+                case 6:
+                    removeBranch();
+                    break;
+                case 7:
+                    removeCustomer();
+                    break;
+                case 8:
+                    removeTransaction();
+                    break;
+                case 9:
+                    saveBank();
+                    break;
+                default:
+                    System.out.println("Please try again with an existing option.");
+                    break;
+                case 99: //In case of input error (non-integer)
+//                    System.out.println("Returning to main menu...");
+                    break;
+            }
+        }
+    }
+    private void printOptionsMenu() {
         System.out.println("Choose an action:");
         System.out.println("0 - Quit application");
         System.out.println("1 - Create new branch");
@@ -64,9 +105,9 @@ public class BankTerminal {
         System.out.println("6 - Remove a branch");
         System.out.println("7 - Remove a customer of a branch");
         System.out.println("8 - Remove a transaction of a customer");
-        System.out.println("9 - Menu of actions");
+        System.out.println("9 - Save all data into a DataBase");
     }
-    public static void createBranch () {
+    private void createBranch () {
         System.out.println("Enter name of branch");
         String branchName = scanner.nextLine();
 
@@ -76,22 +117,21 @@ public class BankTerminal {
             System.out.println("Cannot execute, branch already exists");
         }
     }
-
-    public static void listOfBranches () {
+    private void listOfBranches () {
 
         System.out.println("List of branches:");
         for (int i=0;i< bank.getBranches().size();i++) {
             System.out.println(i+1+": "+ bank.getBranches().get(i).getBranchName());
         }
     }
-    public static void listOfCustomers () {
+    private void listOfCustomers () {
         System.out.println("Enter name of branch you want the list");
         String branchName = scanner.nextLine();
 
         bank.listOfCustomers(branchName);
 
     }
-    public static void addCustomer () {
+    private void addCustomer () {
         System.out.println("Enter name of branch you want to access");
         String branchName = scanner.nextLine();
 
@@ -103,7 +143,7 @@ public class BankTerminal {
 
         bank.addCustomer(branchName,customerName,initialAmount);
     }
-    public static void addTransaction () {
+    private void addTransaction () {
         System.out.println("Enter name of branch you want to access");
         String branchName = scanner.nextLine();
 
@@ -115,7 +155,7 @@ public class BankTerminal {
 
         bank.addTransaction(branchName,customerName,initialAmount);
     }
-    public static void removeBranch () {
+    private void removeBranch () {
         System.out.println("Enter name of branch");
         String branchName = scanner.nextLine();
 
@@ -125,7 +165,7 @@ public class BankTerminal {
             System.out.println("Cannot execute, branch is not in the list");
         }
     }
-    public static void removeCustomer () {
+    private void removeCustomer () {
         System.out.println("Enter name of branch you want to access");
         String branchName = scanner.nextLine();
 
@@ -134,7 +174,7 @@ public class BankTerminal {
 
         bank.removeCustomer(branchName,customerName);
     }
-    public static void removeTransaction () {
+    private void removeTransaction () {
         System.out.println("Enter name of branch you want to access");
         String branchName = scanner.nextLine();
 
@@ -149,40 +189,27 @@ public class BankTerminal {
         }
         // Else, it prints error
     }
-    public void startingBankApp() {
-            System.out.println("Welcome to Bank Little App!\n" +
-                    "Would you like to load the bank database?\n" +
-                    "(yes/no - y/n)");
-            while (true) {
-                String choice = tryStrInput();
-                if (choice == "yes" || choice =="y") {
-                    loadDB();
-                    break;
-                } else if choice == "no" || choice =="n") {
-                    newBank();
-                    break;
-                }
-                    System.out.println("Please try again.");
 
+    private void saveBank() {
+//        TODO
+    }
+    private void loadDB () {
+//        TODO
+    }
+    private void newBank() {
+        System.out.println("Tell what your Bank will be called.");
+        String nameOfBank = input.tryStrInput();
+        while (true) {
+            if (nameOfBank != null) {
+                bank = new Bank(nameOfBank);
+                System.out.println("The bank "+nameOfBank+" was created.");
+                break;
+            } else {
+                System.out.println("Please try again");
             }
         }
-    private String tryStrInput(){
-        try {
-            String strInput = scanner.nextLine();
-            return strInput;
-        } catch (InputMismatchException e) {
-            System.out.println("Input format error, please try again");
-        }
-        return null;
-    }
-    public void execute() {
-        System.out.println(description());
-        startingBankApp();
-    }
-    public String description() {
-        System.out.println("----------------------------Bill's Burger------------------------------------");
-        return ("Are you going to the Bank? No need! I'm here to give you assistance.\n" +
-                "This is the Little Bank App! Feel free to create your own bank, make transactions and clients.\n" +
-                "TODO.\n");
+
+
+
     }
 }

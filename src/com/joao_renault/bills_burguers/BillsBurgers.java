@@ -1,12 +1,13 @@
 package com.joao_renault.bills_burguers;
 
 import com.joao_renault.little_apps.IEssentials;
+import com.joao_renault.service.InputFromUser;
+import com.joao_renault.service.InputFromUserImpl;
 
 import java.util.*;
 
 public class BillsBurgers implements IEssentials {
 
-        private Scanner sc = new Scanner(System.in);
         private Hamburger hamburger = new Hamburger();
         private DeluxeBurger deluxeBurger = new DeluxeBurger();
         private HealthyBurger healthyBurger = new HealthyBurger();
@@ -17,6 +18,7 @@ public class BillsBurgers implements IEssentials {
         private Double[] listOfMeatsPrice = new Double[]{4.10,  4.00, 5.50, 4.65, 3.51, 4.25};
         private String[] listOfAdditions = new String[]{"Chips", "Bacon", "Drinks", "Milkshake", "Nuggets"};
         private Double[] listOfAdditionsPrice = new Double[]{2.75, 1.55, 1.85, 3.00, 2.54};
+        private final InputFromUser input = new InputFromUserImpl();
 
         @Override
         public void execute() {
@@ -31,7 +33,7 @@ public class BillsBurgers implements IEssentials {
                         "1 - Customizable Burger\n" +
                         "2 - Deluxe Burger\n" +
                         "3 - Healthy Burger");
-                int burgerChoice = tryIntInput();
+                int burgerChoice = input.tryIntInput();
                 switch (burgerChoice) {
                         case 1:
                                 requestMeat();
@@ -63,7 +65,6 @@ public class BillsBurgers implements IEssentials {
                 System.out.println("----------------------------------------------------------------------------");
                 System.out.println("Returning to main menu...");
         }
-
         @Override
         public String description() {
                 System.out.println("----------------------------Bill's Burger------------------------------------");
@@ -71,33 +72,12 @@ public class BillsBurgers implements IEssentials {
                         "You can choose between our own exclusive combinations or a customizable burger. Our combos\n" +
                         "include the Deluxe Burger (our specialty) and the Healthy Burger (with exclusive side salad).\n");
         }
-        private int tryIntInput(){
-                try {
-                        int intInput = sc.nextInt();
-                        return intInput;
-                } catch (InputMismatchException e) {
-                        System.out.println("Input format error, please try again");
-                        checkFormat = false;
-                }
-                return -1;
-        }
-        private String tryStrInput(){
-                try {
-                        String strInput = sc.nextLine();
-                        return strInput;
-                } catch (InputMismatchException e) {
-                        System.out.println("Input format error, please try again");
-                        checkFormat = false;
-                }
-                return null;
-        }
         private void requestMeat () {
                 boolean check = false;
                 System.out.println("Below is our list of meats available. Please write your option.");
                 printListMeats();
-                sc.nextLine();
                 while (!check) {
-                        String answer = tryStrInput();
+                        String answer = input.tryStrInput();
                         if (answer.length()>=1) {
                                 answer = answer.substring(0,1).toUpperCase()+answer.substring(1);
                         }
@@ -118,7 +98,7 @@ public class BillsBurgers implements IEssentials {
                         "done just say 'done', 'ok', 'no' or 'stop'.");
                 printListAdditions();
                 while (!check) {
-                        String answer = tryStrInput();
+                        String answer = input.tryStrInput();
                         if (answer.length()>=1) {
                                 answer = answer.substring(0,1).toUpperCase()+answer.substring(1);
                         }
