@@ -51,7 +51,7 @@ public class Hamburger {
             hamburgerPrice+=addition.getAdditionPrice();
             System.out.println("Added "+addition.getAdditionName()+" for an extra "+addition.getAdditionPrice());
         }
-        System.out.println("The total price of your order will be: "+hamburgerPrice+".");
+        System.out.println("The total price of your order will be: "+Math.round(hamburgerPrice)+".");
 
     }
 }

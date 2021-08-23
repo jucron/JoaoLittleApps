@@ -19,8 +19,9 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Starting application...\n" +
-                "---------Welcome to Johnny Little Apps!-------\n" +
-                "-------->>Created by: João Renault<<----------");
+                banner()+"\n"+
+                ("-".repeat(48))+"Welcome to Joao Little Apps!"+("-".repeat(48))+"\n"+
+                ("-".repeat(50))+"Created by: João Renault"+("-".repeat(50))+"\n");
         boolean quit = false;
         int choice;
 
@@ -48,7 +49,7 @@ public class Main {
         }
     }
     private static void optionsMenu () {
-        System.out.println("Choose an action:");
+        System.out.println("Please choose one option:");
         System.out.println("0 - Quit application");
         System.out.println("1 - Run a Little App");
         System.out.println("2 - What is the purpose of this?");
@@ -101,16 +102,27 @@ public class Main {
         }
     }
     private static void purpose () {
-        System.out.println("************************************************************************************************");
+        System.out.println("*".repeat(50));
         System.out.println("Welcome to Johnny Little Apps!\n" +
                 "I've created this small application after going through several hours of training in Java Language.\n" +
                 "All these Little Apps are part of Udemy's course Java Programming Masterclass (by Tim Buchalka),\n" +
-                "but they were all modified to fit in this compact application. They represent my learning process of CORE Java." +
-                "You're welcome to play around and check what I've created. \n" +
-                "I'm always open for suggestions and improvements, so feel free to give me any feedbacks =)\n" +
-                "PS: A reminder that this app is simple and linear, meaning it doesn't follow advance concepts that frameworks do." +
+                "but they were all modified to fit in this compact application. They represent my learning process\n" +
+                "of CORE Java. You're welcome to play around and check what I've created. I'm always open for \n" +
+                "suggestions and improvements, so feel free to give me any feedbacks =)\n" +
+                "PS: A reminder that this app is simple and linear, meaning it doesn't follow \n" +
+                "advance concepts that frameworks do (no dependency injection and such)." +
                 "Created by: João Renault");
-        System.out.println("************************************************************************************************");
+        System.out.println("*".repeat(50));
 
+    }
+    private static String banner() {
+        return ("\n" +
+                "     ___  _______  _______  _______   ___      ___  _______  _______  ___      _______   _______  _______  _______  _______ \n" +
+                "    |   ||       ||   _   ||       | |   |    |   ||       ||       ||   |    |       | |   _   ||       ||       ||       |\n" +
+                "    |   ||   _   ||  |_|  ||   _   | |   |    |   ||_     _||_     _||   |    |    ___| |  |_|  ||    _  ||    _  ||  _____|\n" +
+                "    |   ||  | |  ||       ||  | |  | |   |    |   |  |   |    |   |  |   |    |   |___  |       ||   |_| ||   |_| || |_____ \n" +
+                " ___|   ||  |_|  ||       ||  |_|  | |   |___ |   |  |   |    |   |  |   |___ |    ___| |       ||    ___||    ___||_____  |\n" +
+                "|       ||       ||   _   ||       | |       ||   |  |   |    |   |  |       ||   |___  |   _   ||   |    |   |     _____| |\n" +
+                "|_______||_______||__| |__||_______| |_______||___|  |___|    |___|  |_______||_______| |__| |__||___|    |___|    |_______|\n");
     }
 }
