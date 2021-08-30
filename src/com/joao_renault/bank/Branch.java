@@ -87,8 +87,12 @@ public class Branch {
     }
     public void removeTransaction (String customerName, int numberOfTransaction) {
         Customer customer = findCustomer(customerName);
-        customer.getTransactions().remove(numberOfTransaction-1);
-        System.out.println("Transaction number "+ numberOfTransaction+ " removed.");
+        try {
+            customer.getTransactions().remove(numberOfTransaction-1);
+            System.out.println("Transaction number "+ numberOfTransaction+ " removed.");
+        } catch (Exception e) {
+            System.out.println("Cant find this transaction");
+        }
     }
 
 

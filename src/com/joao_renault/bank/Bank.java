@@ -121,7 +121,6 @@ public class Bank {
     public void removeTransaction (String branchName,String customerName, int numberOfTransaction) {
         Branch branch = findBranch(branchName);
         branch.removeTransaction(customerName, numberOfTransaction);
-
     }
 
 

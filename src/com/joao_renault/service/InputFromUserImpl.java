@@ -11,7 +11,9 @@ public class InputFromUserImpl implements InputFromUser {
 
     public int tryIntInput(){
         try {
-            return scanner.nextInt();
+            int answer = scanner.nextInt();
+            scanner.nextLine();
+            return answer;
         } catch (InputMismatchException e) {
             System.out.println("Input format error, please try again");
             scanner.nextLine();
@@ -30,7 +32,7 @@ public class InputFromUserImpl implements InputFromUser {
     public String tryStrInput(){
         try {
             return scanner.nextLine();
-        } catch (InputMismatchException e) {
+        } catch (InputMismatchException | NullPointerException e) {
             System.out.println("Input format error, please try again");
         }
         return null;
