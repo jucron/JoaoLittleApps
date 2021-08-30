@@ -20,9 +20,9 @@ public class InputFromUserImpl implements InputFromUser {
         }
         return -1;
     }
-    public long tryLongInput(){
+    public double tryDoubleInput(){
         try {
-            return scanner.nextLong();
+            return scanner.nextDouble();
         } catch (InputMismatchException e) {
             System.out.println("Input format error, please try again");
             scanner.nextLine();
