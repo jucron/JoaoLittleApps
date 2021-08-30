@@ -1,10 +1,11 @@
 package com.joao_renault.service;
 
 import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class InputFromUserImpl implements InputFromUser {
-    private Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in).useLocale(Locale.US);
 
     public InputFromUserImpl() {
     }
@@ -22,7 +23,9 @@ public class InputFromUserImpl implements InputFromUser {
     }
     public double tryDoubleInput(){
         try {
-            return scanner.nextDouble();
+            double answer = scanner.nextDouble();
+            scanner.nextLine();
+            return answer;
         } catch (InputMismatchException e) {
             System.out.println("Input format error, please try again");
             scanner.nextLine();

@@ -7,8 +7,6 @@ public class BankTerminal {
 
     boolean quit = false;
     private final InputFromUser input = new InputFromUserImpl();
-
-
     private static Bank bank;
 
     public void execute() {
@@ -16,7 +14,7 @@ public class BankTerminal {
         startingBankApp();
     }
     private String description() {
-        System.out.println("----------------------------Bill's Burger------------------------------------");
+        System.out.println("----------------------------Little Bank App------------------------------------");
         return ("Are you going to the Bank? No need! I'm here to give you assistance with this LittleApp.\n" +
                 "This is the Little Bank App! Feel free to create your own bank, with branches and clients. \n" +
                 "Also you can add transactions and check balance of customers.");
@@ -44,7 +42,7 @@ public class BankTerminal {
     }
     private void optionsMenu() {
         while (!quit) {
-            System.out.println("////////////////////////////////////");
+            printBanner();
             System.out.println("Choose the next action");
             printOptionsMenu();
             int choice = input.tryIntInput();
@@ -81,9 +79,9 @@ public class BankTerminal {
                 case 8:
                     removeTransaction();
                     break;
-                case 9:
-                    saveBank();
-                    break;
+//                case 9: //todo
+//                    saveBank();
+//                    break;
                 default:
                     System.out.println("Please try again with an existing option.");
                     break;
@@ -94,7 +92,7 @@ public class BankTerminal {
         }
     }
     private void printOptionsMenu() {
-        System.out.println("Choose an action:");
+        System.out.println("- Choose an action:");
         System.out.println("0 - Close Bank application");
         System.out.println("1 - Create new branch");
         System.out.println("2 - List of branches");
@@ -104,21 +102,21 @@ public class BankTerminal {
         System.out.println("6 - Remove a branch");
         System.out.println("7 - Remove a customer of a branch");
         System.out.println("8 - Remove a transaction of a customer");
-        System.out.println("9 - Save all data into a DataBase");
+//        System.out.println("9 - Save all data into a DataBase"); //todo
     }
     private void createBranch () {
-        System.out.println("Enter name of branch");
+        System.out.println("- Enter name of branch");
         String branchName = input.tryStrInput();
 
         if (bank.newBranch(branchName)) {
-            System.out.println("New branch "+branchName+" added to the bank");
+            System.out.println("New branch "+branchName+" added to the bank "+bank.getName()+".");
         } else {
             System.out.println("Cannot execute, branch already exists");
         }
     }
     private void listOfBranches () {
 
-        System.out.println("List of branches:");
+        System.out.println("List of branches of "+bank.getName()+":");
         for (int i=0;i< bank.getBranches().size();i++) {
             System.out.println(i+1+": "+ bank.getBranches().get(i).getBranchName());
         }
@@ -131,31 +129,31 @@ public class BankTerminal {
 
     }
     private void addCustomer () {
-        System.out.println("Enter name of branch you want to access");
+        System.out.println("- Enter name of branch you want to access");
         String branchName = input.tryStrInput();
 
-        System.out.println("Enter name of customer you want to create");
+        System.out.println("- Enter name of customer you want to create");
         String customerName = input.tryStrInput();
 
-        System.out.println("Enter initial amount (use dot as decimal)");
+        System.out.println("- Enter initial amount (use dot as decimal)");
         double initialAmount = input.tryDoubleInput();
 
         bank.addCustomer(branchName,customerName,initialAmount);
     }
     private void addTransaction () {
-        System.out.println("Enter name of branch you want to access");
+        System.out.println("- Enter name of branch you want to access");
         String branchName = input.tryStrInput();
 
-        System.out.println("Enter name of customer you want to access");
+        System.out.println("- Enter name of customer you want to access");
         String customerName = input.tryStrInput();
 
-        System.out.println("Enter amount (use dot as decimal)");
+        System.out.println("- Enter amount (use dot as decimal)");
         double initialAmount = input.tryDoubleInput();
 
         bank.addTransaction(branchName,customerName,initialAmount);
     }
     private void removeBranch () {
-        System.out.println("Enter name of branch");
+        System.out.println("- Enter name of branch");
         String branchName = input.tryStrInput();
 
         if (bank.removeBranch(branchName)) {
@@ -165,28 +163,34 @@ public class BankTerminal {
         }
     }
     private void removeCustomer () {
-        System.out.println("Enter name of branch you want to access");
+        System.out.println("- Enter name of branch you want to access");
         String branchName = input.tryStrInput();
 
-        System.out.println("Enter name of customer you want to remove");
+        System.out.println("- Enter name of customer you want to remove");
         String customerName = input.tryStrInput();
 
         bank.removeCustomer(branchName,customerName);
     }
     private void removeTransaction () {
-        System.out.println("Enter name of branch you want to access");
+        System.out.println("- Enter name of branch you want to access");
         String branchName = input.tryStrInput();
 
-        System.out.println("Enter name of customer you want to access");
+        System.out.println("- Enter name of customer you want to access");
         String customerName = input.tryStrInput();
 
         if (bank.listOfTransactions(branchName, customerName)) {
-            System.out.println("Choose which transaction number you wish to remove");
+            System.out.println("- Choose which transaction number you wish to remove");
             int numberOfTransaction = input.tryIntInput();
-
             bank.removeTransaction(branchName,customerName,numberOfTransaction);
         }
         // Else, it prints error
+    }
+    private void printBanner() {
+        System.out.println("" +
+                "'   _____         _      _____              _         _ \n" +
+                "'  | __  |___ ___| |_   |_   _|__ ___ _____|_|___ ___| |\n" +
+                "'  | __ -| .'|   | '_|    | || -_|  _|     | |   | .'| |\n" +
+                "'  |_____|__,|_|_|_,_|    |_||___|_| |_|_|_|_|_|_|__,|_|");
     }
 
     private void saveBank() {
@@ -196,7 +200,7 @@ public class BankTerminal {
 //        TODO
     }
     private void newBank() {
-        System.out.println("Tell what your Bank will be called.");
+        System.out.println("- Tell what your Bank will be called.");
         String nameOfBank = input.tryStrInput();
         while (true) {
             if (nameOfBank != null) {

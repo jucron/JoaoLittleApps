@@ -110,7 +110,7 @@ public class Main {
                 "of CORE Java. You're welcome to play around and check what I've created. I'm always open for \n" +
                 "suggestions and improvements, so feel free to give me any feedbacks =)\n" +
                 "PS: A reminder that this app is simple and linear, meaning it doesn't follow \n" +
-                "advance concepts that modern frameworks offer." +
+                "advance concepts that modern frameworks have.\n" +
                 "Created by: João Renault");
         System.out.println("*".repeat(50));
 
