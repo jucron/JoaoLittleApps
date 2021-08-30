@@ -138,7 +138,7 @@ public class BankTerminal {
         String customerName = input.tryStrInput();
 
         System.out.println("Enter initial amount (use dot as decimal)");
-        double initialAmount = (double) input.tryLongInput();
+        double initialAmount = input.tryDoubleInput();
 
         bank.addCustomer(branchName,customerName,initialAmount);
     }
@@ -150,7 +150,7 @@ public class BankTerminal {
         String customerName = input.tryStrInput();
 
         System.out.println("Enter amount (use dot as decimal)");
-        double initialAmount = (double) input.tryLongInput();
+        double initialAmount = input.tryDoubleInput();
 
         bank.addTransaction(branchName,customerName,initialAmount);
     }

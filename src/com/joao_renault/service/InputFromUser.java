@@ -4,5 +4,5 @@ public interface InputFromUser {
 
     int tryIntInput();
     String tryStrInput();
-    long tryLongInput();
+    double tryDoubleInput();
 }
