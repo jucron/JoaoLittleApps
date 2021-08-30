@@ -1,8 +1,8 @@
 package com.joao_renault;
 
-import com.joao_renault.little_apps.*;
 import com.joao_renault.bank.BankTerminal;
 import com.joao_renault.bills_burguers.BillsBurgers;
+import com.joao_renault.little_apps.*;
 import com.joao_renault.service.InputFromUser;
 import com.joao_renault.service.InputFromUserImpl;
 
@@ -104,13 +104,13 @@ public class Main {
     private static void purpose () {
         System.out.println("*".repeat(50));
         System.out.println("Welcome to Johnny Little Apps!\n" +
-                "I've created this small application after going through several hours of training in Java Language.\n" +
+                "I've created this small application after going through extensive training in Java Language.\n" +
                 "All these Little Apps are part of Udemy's course Java Programming Masterclass (by Tim Buchalka),\n" +
                 "but they were all modified to fit in this compact application. They represent my learning process\n" +
                 "of CORE Java. You're welcome to play around and check what I've created. I'm always open for \n" +
                 "suggestions and improvements, so feel free to give me any feedbacks =)\n" +
                 "PS: A reminder that this app is simple and linear, meaning it doesn't follow \n" +
-                "advance concepts that frameworks do (no dependency injection and such)." +
+                "advance concepts that modern frameworks offer." +
                 "Created by: João Renault");
         System.out.println("*".repeat(50));
 

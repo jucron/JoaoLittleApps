@@ -3,9 +3,6 @@ package com.joao_renault.bank;
 import com.joao_renault.service.InputFromUser;
 import com.joao_renault.service.InputFromUserImpl;
 
-import java.util.Locale;
-import java.util.Scanner;
-
 public class BankTerminal {
 
     boolean quit = false;
@@ -20,9 +17,9 @@ public class BankTerminal {
     }
     private String description() {
         System.out.println("----------------------------Bill's Burger------------------------------------");
-        return ("Are you going to the Bank? No need! I'm here to give you assistance.\n" +
-                "This is the Little Bank App! Feel free to create your own bank, make transactions and clients.\n" +
-                "TODO.\n");
+        return ("Are you going to the Bank? No need! I'm here to give you assistance with this LittleApp.\n" +
+                "This is the Little Bank App! Feel free to create your own bank, with branches and clients. \n" +
+                "Also you can add transactions and check balance of customers.");
     }
     private void startingBankApp() {
         System.out.println("Let's get started!");
