@@ -2,6 +2,7 @@ package com.joao_renault;
 
 import com.joao_renault.bank.BankTerminal;
 import com.joao_renault.bills_burguers.BillsBurgers;
+import com.joao_renault.general_store.GeneralStore;
 import com.joao_renault.little_apps.*;
 import com.joao_renault.service.InputFromUser;
 import com.joao_renault.service.InputFromUserImpl;
@@ -15,6 +16,7 @@ public class Main {
     private static GreatestCommonDivisor app5 = new GreatestCommonDivisor();
     private static BillsBurgers app6 = new BillsBurgers();
     private static BankTerminal app7 = new BankTerminal();
+    private static GeneralStore app8 = new GeneralStore();
 
 
     public static void main(String[] args) {
@@ -63,7 +65,8 @@ public class Main {
                 "4 - Diagonal Star\n" +
                 "5 - Greatest Common Divisor\n" +
                 "6 - Bill's Burger\n" +
-                "7 - Bank");
+                "7 - Bank\n" +
+                "8 - General Store");
     }
     private static void menuOfApps() {
         littleAppsMenu();
@@ -92,6 +95,9 @@ public class Main {
                 break;
             case 7:
                 app7.execute();
+                break;
+            case 8:
+                app8.execute();
                 break;
             default:
                 System.out.println("Please try again with an existing option.");

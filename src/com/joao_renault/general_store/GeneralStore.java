@@ -31,18 +31,20 @@ public class GeneralStore implements IEssentials {
                 "Unfortunately I own a small store, and our supplier is not reliable.. So you might see a weird\n" +
                 "variety of items, and the stock keep changing each time you come. But feel free to tell me what\n" +
                 "you need and I'll put it in this basket. After we're done, we'll just count them. ");
+
     }
 
-    @Override //todo
+    @Override
     public void inputFromUser() {
+        input.anyKeyToContinue();
         //ask for user which item should be added to basket
         boolean check = false;
         System.out.println("What would you like to add or remove in your basket?.\n" +
                     "Please write 'add' or 'remove' words followed by the quantity  \n"+
-                    "and followed by the item's name (example: \"add 5 spoons\")"+
+                    "and followed by the item's name (example: \"add 5 spoons\")\n"+
                     "when you're satisfied just say 'done', 'ok', 'no' or 'stop'.");
-        System.out.println("Feel free to take a look at my stock, at this moment:");
         while (!check) {
+//            System.out.println("This is my stock, and your basket at this moment:");
             System.out.println(stockList);
             System.out.println(basket);
 
@@ -57,7 +59,8 @@ public class GeneralStore implements IEssentials {
                     case "no":
                     case "stop":
                         check = true;
-                        System.out.println("Alright, please pay the total value of your basket.");
+                        System.out.println("Alright, please pay the total value of your basket:");
+                        System.out.println(basket);
                         break;
                     case "add":
                         try {
@@ -87,14 +90,14 @@ public class GeneralStore implements IEssentials {
                 }
             }
         }
-        output();
     }
 
     @Override
     public void output() {
         //wrap all items and checkout
         checkOut(basket);
-        System.out.println("Would you like to buy more things?");
+        System.out.println("Would you like to buy more things?\n"+
+                            "(the stock will remain the same");
         String answer = input.tryStrInput();
         if (Objects.equals(answer, "yes") || Objects.equals(answer, "y")) {
             inputFromUser();
@@ -110,14 +113,16 @@ public class GeneralStore implements IEssentials {
         stockList.addStock(new StockItem("cake", 2.10, random.nextInt(10)));
         stockList.addStock(new StockItem("towel", 15.40, random.nextInt(8)));
         stockList.addStock(new StockItem("chocolate", 1.50, random.nextInt(15)));
-        stockList.addStock(new StockItem("meat", 5.0, random.nextInt(3)));
+        stockList.addStock(new StockItem("meat", 5.23, random.nextInt(3)));
         stockList.addStock(new StockItem("cup", 4.50, random.nextInt(20)));
         stockList.addStock(new StockItem("pencil", 0.45,random.nextInt(25)));
         stockList.addStock(new StockItem("doorknob", 25.45, random.nextInt(4)));
         stockList.addStock(new StockItem("juice", 2.50, random.nextInt(10)));
-        stockList.addStock(new StockItem("phone", 96.99, random.nextInt(2)));
+        stockList.addStock(new StockItem("phone", 26.99, random.nextInt(2)));
         stockList.addStock(new StockItem("vase", 8.76, random.nextInt(5)));
         stockList.addStock(new StockItem("orange", 0.21, random.nextInt(40)));
+        stockList.addStock(new StockItem("spoon", 1.25, random.nextInt(40)));
+
 
     }
     public static int reserveItem(Basket basket, String item, int quantity) {

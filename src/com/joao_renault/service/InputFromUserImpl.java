@@ -42,7 +42,7 @@ public class InputFromUserImpl implements InputFromUser {
     }
     public void anyKeyToContinue () {
         try {
-            System.out.println("Press any key to continue..");
+            System.out.println("*".repeat(15)+"Press any key to continue"+"*".repeat(15));
             scanner.nextLine();
         } catch (InputMismatchException | NullPointerException e) {
             System.out.println("Try again.");
