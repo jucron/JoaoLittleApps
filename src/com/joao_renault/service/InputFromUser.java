@@ -5,4 +5,5 @@ public interface InputFromUser {
     int tryIntInput();
     String tryStrInput();
     double tryDoubleInput();
+    void anyKeyToContinue();
 }

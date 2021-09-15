@@ -4,7 +4,7 @@ import com.joao_renault.little_apps.IEssentials;
 import com.joao_renault.service.InputFromUser;
 import com.joao_renault.service.InputFromUserImpl;
 
-import java.util.*;
+import java.util.Arrays;
 
 public class BillsBurgers implements IEssentials {
 
@@ -61,6 +61,7 @@ public class BillsBurgers implements IEssentials {
         public void output() {
                 if (this.checkFormat) {
                         System.out.println("Bill's Burger appreciate your order, please come again!");
+                        this.input.anyKeyToContinue();
                 }
                 System.out.println("----------------------------------------------------------------------------");
                 System.out.println("Returning to main menu...");

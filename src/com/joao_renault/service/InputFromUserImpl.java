@@ -40,4 +40,12 @@ public class InputFromUserImpl implements InputFromUser {
         }
         return null;
     }
+    public void anyKeyToContinue () {
+        try {
+            System.out.println("Press any key to continue..");
+            scanner.nextLine();
+        } catch (InputMismatchException | NullPointerException e) {
+            System.out.println("Try again.");
+        }
+    }
 }

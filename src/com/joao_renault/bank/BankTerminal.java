@@ -43,14 +43,12 @@ public class BankTerminal {
     private void optionsMenu() {
         while (!quit) {
             printBanner();
-            System.out.println("Choose the next action");
             printOptionsMenu();
             int choice = input.tryIntInput();
 //            scanner.nextLine(); // (This consumes the \n character)
             switch (choice) {
                 case 0:
                     System.out.println("Closing Bank Application");
-                    saveBank();
                     System.out.println("----------------------------------------------------------------------------");
                     System.out.println("Returning to main menu...");
                     quit=true;
@@ -120,13 +118,14 @@ public class BankTerminal {
         for (int i=0;i< bank.getBranches().size();i++) {
             System.out.println(i+1+": "+ bank.getBranches().get(i).getBranchName());
         }
+        this.input.anyKeyToContinue();
     }
     private void listOfCustomers () {
         System.out.println("Enter name of branch you want the list");
         String branchName = input.tryStrInput();
 
         bank.listOfCustomers(branchName);
-
+        this.input.anyKeyToContinue();
     }
     private void addCustomer () {
         System.out.println("- Enter name of branch you want to access");
