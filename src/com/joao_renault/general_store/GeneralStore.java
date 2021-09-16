@@ -15,7 +15,6 @@ public class GeneralStore implements IEssentials {
     private Basket basket = new Basket("customer");
     private Random random = new Random();
 
-
     @Override
     public void execute() {
         System.out.println(description());
@@ -28,12 +27,10 @@ public class GeneralStore implements IEssentials {
     public String description() {
         System.out.println("----------------------------General Store------------------------------------");
         return ("Welcome to my general store, stranger! What would you like to buy?.\n" +
-                "Unfortunately I own a small store, and our supplier is not reliable.. So you might see a weird\n" +
+                "Unfortunately this is small store, and our supplier is not really reliable. So you might see a few\n" +
                 "variety of items, and the stock keep changing each time you come. But feel free to tell me what\n" +
-                "you need and I'll put it in this basket. After we're done, we'll just count them. ");
-
+                "you need and I'll put it in your basket. After we're done, we'll just count them. ");
     }
-
     @Override
     public void inputFromUser() {
         input.anyKeyToContinue();
@@ -51,7 +48,7 @@ public class GeneralStore implements IEssentials {
             String answer = input.tryStrInput();
             if (answer.length()>=1) {
                 answer = answer.toLowerCase();
-                String str[] = answer.split(" ");
+                String[] str = answer.split(" ");
                 int quantity;
                 switch (str[0]) {
                     case "done":
@@ -69,8 +66,8 @@ public class GeneralStore implements IEssentials {
                             System.out.println("I don't seem to understand your order, please repeat.");
                             break;
                         }
-                        if (reserveItem(basket,str[2],quantity) != 0) {
-                            System.out.println("Added to the basket.");
+                        if (reserveItem(basket,checkPlural(str[2]),quantity) != 0) {
+                            System.out.println("Added "+str[2]+" to the basket.");
                         }
                         break;
                     case "remove":
@@ -80,7 +77,7 @@ public class GeneralStore implements IEssentials {
                             System.out.println("I don't seem to understand your order, please repeat.");
                             break;
                         }
-                        if (removeItem(basket,str[2],quantity) != 0) {
+                        if (removeItem(basket,checkPlural(str[2]),quantity) != 0) {
                             System.out.println("Removed from the basket.");
                         }
                         break;
@@ -91,41 +88,38 @@ public class GeneralStore implements IEssentials {
             }
         }
     }
-
     @Override
     public void output() {
         //wrap all items and checkout
         checkOut(basket);
         System.out.println("Would you like to buy more things?\n"+
-                            "(the stock will remain the same");
-        String answer = input.tryStrInput();
+                            "(the stock will remain the same)");
+        String answer = input.tryStrInput().toLowerCase();
         if (Objects.equals(answer, "yes") || Objects.equals(answer, "y")) {
             inputFromUser();
         }
-        System.out.println("Thank you for your purchase, see you next time!");
+        System.out.println("Thank you for coming, next time well have more stock!");
         this.input.anyKeyToContinue();
         System.out.println("----------------------------------------------------------------------------");
         System.out.println("Returning to main menu...");
     }
-
     private void generateStore () {
-        stockList.addStock(new StockItem("bread", 0.86, random.nextInt(10)));
-        stockList.addStock(new StockItem("cake", 2.10, random.nextInt(10)));
-        stockList.addStock(new StockItem("towel", 15.40, random.nextInt(8)));
-        stockList.addStock(new StockItem("chocolate", 1.50, random.nextInt(15)));
+        stockList.addStock(new StockItem("bread", 0.86, random.nextInt(5)));
+        stockList.addStock(new StockItem("cake", 2.10, random.nextInt(3)));
+        stockList.addStock(new StockItem("towel", 15.40, random.nextInt(2)));
+        stockList.addStock(new StockItem("chocolate", 1.50, random.nextInt(5)));
         stockList.addStock(new StockItem("meat", 5.23, random.nextInt(3)));
-        stockList.addStock(new StockItem("cup", 4.50, random.nextInt(20)));
-        stockList.addStock(new StockItem("pencil", 0.45,random.nextInt(25)));
-        stockList.addStock(new StockItem("doorknob", 25.45, random.nextInt(4)));
+        stockList.addStock(new StockItem("cup", 4.50, random.nextInt(8)));
+        stockList.addStock(new StockItem("pencil", 0.45,random.nextInt(10)));
+        stockList.addStock(new StockItem("doorknob", 25.45, random.nextInt(3)));
         stockList.addStock(new StockItem("juice", 2.50, random.nextInt(10)));
         stockList.addStock(new StockItem("phone", 26.99, random.nextInt(2)));
         stockList.addStock(new StockItem("vase", 8.76, random.nextInt(5)));
-        stockList.addStock(new StockItem("orange", 0.21, random.nextInt(40)));
-        stockList.addStock(new StockItem("spoon", 1.25, random.nextInt(40)));
-
-
+        stockList.addStock(new StockItem("orange", 0.21, random.nextInt(25)));
+        stockList.addStock(new StockItem("spoon", 1.25, random.nextInt(9)));
+        stockList.addStock(new StockItem("broom", 1.25, random.nextInt(3)));
     }
-    public static int reserveItem(Basket basket, String item, int quantity) {
+    private int reserveItem(Basket basket, String item, int quantity) {
         //retrieve the item from stock list
         StockItem stockItem = stockList.get(item);
         if (stockItem == null) {
@@ -135,10 +129,10 @@ public class GeneralStore implements IEssentials {
         if (stockList.reserveStock(item, quantity) != 0) {
             return basket.addToBasket(stockItem,quantity);
         }
-        System.out.println("There is no more "+stockItem.getName()+" in the stock.");
+        System.out.println("There is not enough "+stockItem.getName()+" in the stock.");
         return 0;
     }
-    public static int removeItem(Basket basket, String item, int quantity) {
+    private int removeItem(Basket basket, String item, int quantity) {
         //retrieve the item from stock list
         StockItem stockItem = stockList.get(item);
         if (stockItem == null) {
@@ -148,14 +142,20 @@ public class GeneralStore implements IEssentials {
         if (basket.removeFromBasket(stockItem, quantity) == quantity) {
             return stockList.unreserveStock(item, quantity);
         }
-        System.out.println("There is no more "+stockItem.getName()+" in the basket.");
+        System.out.println("There is no "+stockItem.getName()+" in the basket.");
 
         return 0;
     }
-    public static void checkOut (Basket basket) {
+    private void checkOut (Basket basket) {
         for (Map.Entry<StockItem, Integer> item: basket.items().entrySet()) {
             stockList.sellStock(item.getKey().getName(), item.getValue());
         }
         basket.clearBasket();
+    }
+    private String checkPlural (String str) {
+        if (str.charAt(str.length() - 1) == 's') {
+            return str.substring(0,str.length()-1);
+        }
+        return str;
     }
 }

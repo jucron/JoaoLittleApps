@@ -77,7 +77,6 @@ public class StockList {
         if you create other methods that modify the map elements, it will bypass this configuration.*/
     }
 
-
     @Override
     public String toString() {
         String s = "\nStock List\n";
@@ -87,10 +86,14 @@ public class StockList {
 
             double itemValue = stockItem.getPrice()*stockItem.availableQuantity();
 
-            s = s+" -"+stockItem+". There are "+stockItem.availableQuantity()+" in stock. Value of items: ";
-            s = s+String.format("%.2f",itemValue)+"\n";
+            if (stockItem.availableQuantity()>0) {
+                s = s+" -"+stockItem+". There are "+stockItem.availableQuantity()+" in stock. Value of items: $";
+                s = s+String.format("%.2f",itemValue)+"\n";
+            } else {
+                s = s + " -"+stockItem+". Out of stock.\n";
+            }
             totalCost+= itemValue;
         }
-        return s+"Total stock value "+String.format("%.2f",totalCost);
+        return s+"Total stock value $"+String.format("%.2f",totalCost);
     }
 }

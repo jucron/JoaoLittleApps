@@ -42,7 +42,7 @@ public class StockItem implements Comparable<StockItem> {
         }
     }
     public int reserveStock (int quantity) {
-        if (quantity <= quantityInStock) {
+        if (quantity <= availableQuantity()) {
             reserved += quantity;
             return quantity;
         }
@@ -96,6 +96,7 @@ public class StockItem implements Comparable<StockItem> {
 
     @Override
     public String toString() {
-        return this.name+ " : price "+this.price+". Reserved: "+this.reserved;
+        return  ((this.reserved == 0) ? this.name.toUpperCase()+ " : price $"+this.price :
+                this.name.toUpperCase()+ " : price "+this.price+". Reserved: "+this.reserved);
     }
 }

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="JoaoLittleApps:jar3">
+    <output-path>$PROJECT_DIR$/out/artifacts/JoaoLittleApps_jar3</output-path>
+    <root id="archive" name="JoaoLittleApps.jar">
+      <element id="module-output" name="JoaoLittleApps" />
+    </root>
+  </artifact>
+</component>

@@ -17,7 +17,7 @@ public class Basket {
         if ((item != null) && (quantity > 0)) {
             int inBasket = list.getOrDefault(item, 0);
             list.put(item, inBasket+quantity);
-            return inBasket;
+            return inBasket+quantity;
         }
         return 0;
     }
@@ -51,9 +51,9 @@ public class Basket {
         double totalCost = 0.0;
         for (Map.Entry<StockItem, Integer> item: list.entrySet()) {
 //            s = s +" >"+ (item.getKey()) + ". "+item.getValue() + " purchased\n";
-            s = s +" > "+ (item.getKey()) + ". subtotal: "+(item.getKey().getPrice() * item.getValue()+".\n");
+            s = s +" > "+ (item.getKey()) + ". subtotal: $"+(item.getKey().getPrice() * item.getValue()+".\n");
             totalCost+= item.getKey().getPrice() * item.getValue();
         }
-        return s + "Total cost "+String.format("%.2f",totalCost);
+        return s + "Total cost $"+String.format("%.2f",totalCost);
     }
 }
